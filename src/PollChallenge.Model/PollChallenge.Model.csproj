@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20200730200007_InitialCreate.cs" />
+    <Compile Remove="Migrations\20200730200007_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20200802050447_InitialCreate.cs" />
+    <Compile Remove="Migrations\20200802050447_InitialCreate.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.6" />
+  </ItemGroup>
+
+</Project>

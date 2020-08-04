@@ -1,0 +1,11 @@
+
+*.drawio
+*.db
+src/.vs
+src/PollChallenge.Tests/bin
+src/PollChallenge.Tests/obj
+src/PollChallenge.Model/bin
+src/PollChallenge.Model/obj
+src/PollChallenge.Api/bin
+src/PollChallenge.Api/obj
+src/TestResults
