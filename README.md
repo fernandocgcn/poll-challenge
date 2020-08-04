@@ -57,7 +57,7 @@ dotnet --version
 
 No servidor onde irá hospedar a aplicação:  
 
-1. Habilitar o IIS:
+1. Habilitar o IIS:  
 No Windows, navegue até Painel de Controle > Programas > Programas e Recursos > Ativar ou desativar recursos do Windows (lado esquerdo da tela).  
 Selecione a caixa de seleção Serviços de Informações da Internet. Selecione OK.  
 
