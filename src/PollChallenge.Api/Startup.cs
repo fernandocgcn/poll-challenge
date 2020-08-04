@@ -74,6 +74,9 @@ namespace PollChallenge.Api
 
             services.AddDbContext<PollDbContext>(options 
                 => options.UseSqlite(Configuration.GetConnectionString("Sqlite")));
+            services.BuildServiceProvider()
+                .GetRequiredService<PollDbContext>()
+                .Database.Migrate();
 
             services.AddScoped<IPollSrv, PollSrv>();
         }
