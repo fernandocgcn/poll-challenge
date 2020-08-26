@@ -16,13 +16,13 @@ Implementação em C# (.NET Core) de uma API RESTful moderna e autônoma, com tr
 
 * src/PollChallenge.Model - Biblioteca do modelo de dados do projeto (entidades). Acesso aos dados com Entity Framework Core, utilizando Migrations (Microsoft.EntityFrameworkCore.IEntityTypeConfiguration) e o padrão Unit of Work (Microsoft.EntityFrameworkCore.DbContext).  
 
-* src/PollChallenge.Api - Web API RESTful contendo os services e controllers (domínio e lógica do negócio), utilizando os padrões MVVM, MVC e Injeção de Dependência para Inversão de Controle dos serviços utilizados. Documentação automática usando NSwag (uma implementação da especificação OpenAPI/Swagger para .NET e TypeScript).  
+* src/PollChallenge.Api - Web API RESTful contendo os services e controllers (domínio e lógica do negócio), utilizando os padrões MVVM, MVC, Repository e Injeção de Dependência para Inversão de Controle dos serviços utilizados. Documentação automática usando NSwag (uma implementação da especificação OpenAPI/Swagger para .NET e TypeScript).  
 
-* src/PollChallenge.Tests - Testes de unidade (MSTest) dos services e controllers (domínio e lógica do negócio) do projeto da API. Fundamental para a utilização de TDD no desenvolvimento do projeto e ajudar a manter um baixo acoplamento.  
+* src/PollChallenge.Tests - Testes de unidade (MSTest) dos services e controllers (domínio e lógica do negócio) do projeto da API. Fundamental para a utilização de TDD no desenvolvimento do projeto, ajudando a manter um baixo acoplamento e a detectar critérios dos requisitos ainda não considerados.  
 
 ### Metodologias, Técnicas e Princípios Utilizados
 
-* SOLID, Design Patterns, DDD, TDD, ER Model, OOP, KISS, DRY
+* SOLID, Design Patterns, DDD, TDD, OOP, ER Model, KISS, DRY
 
 ## Screenshots da Aplicação
 
@@ -31,17 +31,6 @@ Implementação em C# (.NET Core) de uma API RESTful moderna e autônoma, com tr
 ![](/misc/screenshots/03.png)
 ![](/misc/screenshots/04.png)
 ![](/misc/screenshots/05.png)
-
-## Considerações sobre o Projeto
-
-1. Qual foi a parte mais difícil na solução do desafio?  
-R. Não que tenha sido difícil, mas a parte um pouco mais elaborada, foi na concepção do modelo de classes, tive uma dúvida de como implementar a chave primária da classe Option (opções da enquete).  Primeiramente implementei como chave simples (uma única propriedade da classe), mas no decorrer do desenvolvimento, verifiquei que o endpoint (post) para registrar	 um voto para uma opção necessitava do id da enquete (via query) e do id da opção (via body), então modifiquei a chave primária para composta contendo tanto o id da opção como o id da enquete (chave estrangeira).  
-
-2. Se você pudesse voltar no tempo e se dar um conselho no início do desafio, qual seria?  
-R. O conselho seria: "Inclua tanto uma associação da classe Option para Poll como também uma da classe Poll para Option (coleção de opções)", pois além do EFCore facilitar muito a navegação entre as entidades, a modificação trouxe um código mais simples e limpo na resolução dos requisitos.  
-
-3. Se você pudesse mudar algo na proposta/definição do desafio, o que seria?  
-R. Achei o desafio muito bem detalhado e autoexplicativo, talvez uma pequena modificação seja na especificação do id das opções da enquete. Se único somente dentro da enquete ou único no total.  
 
 ## Tutorial de Instalação no Windows para Desenvolvedores
 

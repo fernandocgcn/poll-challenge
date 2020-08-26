@@ -78,7 +78,7 @@ namespace PollChallenge.Api
                 .GetRequiredService<PollDbContext>()
                 .Database.Migrate();
 
-            services.AddScoped<IPollSrv, PollSrv>();
+            services.AddScoped<PollRepository, PollRepositoryImp>();
         }
     }
 }

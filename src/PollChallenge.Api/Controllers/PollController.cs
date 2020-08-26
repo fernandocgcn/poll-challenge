@@ -12,22 +12,22 @@ namespace PollChallenge.Api.Controllers
     [Route("[controller]")]
     public class PollController : ControllerBase
     {
-        private readonly IPollSrv _pollSrv;
+        private readonly PollRepository _pollRepository;
         private readonly IMapper _mapper;
 
-        public PollController(IPollSrv pollSrv, IMapper mapper)
+        public PollController(PollRepository pollSrv, IMapper mapper)
         {
-            _pollSrv = pollSrv;
+            _pollRepository = pollSrv;
             _mapper = mapper;
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<PollGetVM>> GetPoll(int id)
+        public async Task<ActionResult<PollGetVM>> GetPoll(int pollId)
         {
             try
             {
-                var poll = await _pollSrv.GetPollAsync(id);
-                _pollSrv.IncrementViewsQty(poll);
+                var poll = await _pollRepository.GetPollAsync(pollId);
+                _pollRepository.IncrementViewsQty(poll);
                 return Ok(_mapper.Map<PollGetVM>(poll));
             }
             catch (InvalidOperationException)
@@ -46,7 +46,7 @@ namespace PollChallenge.Api.Controllers
             try
             {
                 var poll = _mapper.Map<Poll>(pollPostVM);
-                _pollSrv.AddNewPoll(poll);
+                _pollRepository.AddNewPoll(poll);
                 return CreatedAtAction(nameof(GetPoll), 
                     new { id = poll.Id }, new { poll_id = poll.Id });
             }
@@ -57,13 +57,13 @@ namespace PollChallenge.Api.Controllers
         }
 
         [HttpPost("{id}/vote")]
-        public async Task<ActionResult> PostVote(int id, [FromBody] VotePostVM votePostVM)
+        public async Task<ActionResult> PostVote(int pollId, [FromBody] VotePostVM votePostVM)
         {
             try
             {
-                var option = await _pollSrv.GetOptionAsync(id, votePostVM.Id);
-                _pollSrv.IncrementVotesQty(option);
-                return CreatedAtAction(nameof(GetStats), new { id },
+                var option = await _pollRepository.GetOptionAsync(pollId, votePostVM.Id);
+                _pollRepository.IncrementVotesQty(option);
+                return CreatedAtAction(nameof(GetStats), new { pollId },
                     new { option_id = votePostVM.Id });
             }
             catch (InvalidOperationException)
@@ -77,11 +77,11 @@ namespace PollChallenge.Api.Controllers
         }
 
         [HttpGet("{id}/stats")]
-        public async Task<ActionResult<StatGetVM>> GetStats(int id)
+        public async Task<ActionResult<StatGetVM>> GetStats(int pollId)
         {
             try
             {
-                var poll = await _pollSrv.GetPollAsync(id);
+                var poll = await _pollRepository.GetPollAsync(pollId);
                 return Ok(_mapper.Map<StatGetVM>(poll));
             }
             catch (InvalidOperationException)

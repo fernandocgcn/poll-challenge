@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 namespace PollChallenge.Tests.Services
 {
     [TestClass]
-    public class PollSrvTest : ServicesMock
+    public class PollRepositoryTest : ServicesMock
     {
-        private readonly IPollSrv _pollSrv;
+        private readonly PollRepository _pollRepository;
 
-        public PollSrvTest()
-            => _pollSrv = new PollSrv(_dbContext);
+        public PollRepositoryTest()
+            => _pollRepository = new PollRepositoryImp(_dbContext);
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
@@ -24,7 +24,7 @@ namespace PollChallenge.Tests.Services
             CreatePoll();
 
             // Act
-            await _pollSrv.GetPollAsync(int.MaxValue);
+            await _pollRepository.GetPollAsync(int.MaxValue);
         }
 
         [TestMethod]
@@ -34,22 +34,22 @@ namespace PollChallenge.Tests.Services
             var expected = CreatePoll();
 
             // Act
-            var result = await _pollSrv.GetPollAsync(expected.Id);
+            var result = await _pollRepository.GetPollAsync(expected.Id);
 
             // Assert
             Assert.AreEqual(expected, result);
         }
 
         [TestMethod]
-        public void IncrementViewsQty_ShouldAddOneToViewsQty()
+        public void IncrementViewsQtyAsync_ShouldAddOneToViewsQty()
         {
             // Arrange
             var expected = CreatePoll();
 
             // Act
-            _pollSrv.IncrementViewsQty(expected);
-            _pollSrv.IncrementViewsQty(expected);
-            _pollSrv.IncrementViewsQty(expected);
+            _pollRepository.IncrementViewsQty(expected);
+            _pollRepository.IncrementViewsQty(expected);
+            _pollRepository.IncrementViewsQty(expected);
 
             // Assert
             Assert.AreEqual(expected.ViewsQty, 3L);
@@ -62,7 +62,7 @@ namespace PollChallenge.Tests.Services
             var poll = new Poll() { Description = "Poll" };
 
             // Act - Assert
-            Assert.ThrowsException<ArgumentNullException>(() => _pollSrv.AddNewPoll(poll));
+            Assert.ThrowsException<ArgumentNullException>(() => _pollRepository.AddNewPoll(poll));
         }
 
         [TestMethod]
@@ -73,8 +73,8 @@ namespace PollChallenge.Tests.Services
             var expected2 = CreatePoll(false);
 
             // Act
-            _pollSrv.AddNewPoll(expected1);
-            _pollSrv.AddNewPoll(expected2);
+            _pollRepository.AddNewPoll(expected1);
+            _pollRepository.AddNewPoll(expected2);
 
             // Assert
             Assert.AreEqual(expected1.Id, 1);
@@ -89,7 +89,7 @@ namespace PollChallenge.Tests.Services
             CreatePoll();
 
             // Act
-            await _pollSrv.GetOptionAsync(int.MaxValue, int.MaxValue);
+            await _pollRepository.GetOptionAsync(int.MaxValue, int.MaxValue);
         }
 
         [TestMethod]
@@ -100,7 +100,7 @@ namespace PollChallenge.Tests.Services
             var expected = poll.Options.First();
 
             // Act
-            var result = await _pollSrv.GetOptionAsync(poll.Id, expected.Id);
+            var result = await _pollRepository.GetOptionAsync(poll.Id, expected.Id);
 
             // Assert
             Assert.AreEqual(expected, result);
@@ -114,9 +114,9 @@ namespace PollChallenge.Tests.Services
             var expected = poll.Options.ToArray();
 
             // Act
-            _pollSrv.IncrementVotesQty(expected[0]);
-            _pollSrv.IncrementVotesQty(expected[1]);
-            _pollSrv.IncrementVotesQty(expected[0]);
+            _pollRepository.IncrementVotesQty(expected[0]);
+            _pollRepository.IncrementVotesQty(expected[1]);
+            _pollRepository.IncrementVotesQty(expected[0]);
 
             // Assert
             Assert.AreEqual(expected[0].VotesQty, 2L);

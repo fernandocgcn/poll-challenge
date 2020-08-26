@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace PollChallenge.Api.Services
 {
-    public interface IPollSrv
+    public interface PollRepository
     {
         Task<Poll> GetPollAsync(int id);
         void IncrementViewsQty(Poll poll);

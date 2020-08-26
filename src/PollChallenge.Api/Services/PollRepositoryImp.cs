@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace PollChallenge.Api.Services
 {
-    public class PollSrv : IPollSrv
+    public class PollRepositoryImp : PollRepository
     {
         private readonly PollDbContext _pollDbContext;
 
-        public PollSrv(PollDbContext pollDbContext)
+        public PollRepositoryImp(PollDbContext pollDbContext)
             => _pollDbContext = pollDbContext;
 
         public async Task<Poll> GetPollAsync(int id)

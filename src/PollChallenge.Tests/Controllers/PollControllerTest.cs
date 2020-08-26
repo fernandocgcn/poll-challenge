@@ -12,13 +12,13 @@ namespace PollChallenge.Tests.Controllers
     [TestClass]
     public class PollControllerTest : ServicesMock
     {
-        private readonly IPollSrv _pollSrv;
+        private readonly PollRepository _pollRepository;
         private readonly PollController _pollController;
 
         public PollControllerTest()
         {
-            _pollSrv = new PollSrv(_dbContext);
-            _pollController = new PollController(_pollSrv, _mapper);
+            _pollRepository = new PollRepositoryImp(_dbContext);
+            _pollController = new PollController(_pollRepository, _mapper);
         }
 
         [TestMethod]
